@@ -24,7 +24,7 @@ pipeline {
         }
         stage("publish") {
             when {
-                branch '**/master'
+                branch '**/main'
             }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'rs-git-package-registry-ydeng', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
