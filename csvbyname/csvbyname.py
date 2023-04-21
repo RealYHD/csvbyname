@@ -1,15 +1,45 @@
 import argparse
+import os
+import re
+
+
+def matcher(path: str, regex_groups: list[str]):
+    matches = []
+    for regex in regex_groups:
+        matches[path]
 
 
 def collect_files(
-    path: str,
+    dir_path: str,
     include_folders: bool,
     entire_path: bool,
     recursive: bool,
     regex_groups: list[str],
 ):
-    # TODO Finish collecting all files
-    pass
+    collected = {}
+
+    def matcher(full_path, use_full_path):
+        return [
+            re.match(
+                regex, full_path if use_full_path else os.path.basename(full_path)
+            ).groups(1)
+            for regex in regex_groups
+        ]
+
+    for item in os.listdir(dir_path):
+        full_path = os.path.join(dir_path, item)
+        if os.path.isdir(full_path):
+            if include_folders:
+                if full_path not in collected:
+                    collected[full_path] = set()
+                collected = collected[full_path] | matcher(full_path, entire_path)
+            collected = collected | collect_files(
+                full_path, include_folders, entire_path, recursive, regex_groups
+            )
+        elif os.path.isfile(full_path):
+            if full_path not in collected:
+                collected[full_path] = set()
+            collected = collected[full_path] | matcher(full_path, entire_path)
 
 
 def write_collected_to_csv(output_path: str, collected: dict[str, dict[str, str]]):
