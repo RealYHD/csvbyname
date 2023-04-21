@@ -1,0 +1,2 @@
+class InvalidPropertiesException(Exception):
+    pass

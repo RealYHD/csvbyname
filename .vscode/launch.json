@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Use Test Resources",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/csvbyname/csvbyname.py",
+            "console": "integratedTerminal",
+            "args": [
+                "${workspaceFolder}/tests/resources",
+                "${workspaceFolder}/output.csv",
+                "-r",
+                "-p",
+                "group_num:group(\\d)-\\w-\\d+\\.txt",
+                "group(\\d)-(?P<sect>\\w)-(?P<patid>\\d+)\\.txt",
+                "-V",
+                "DEBUG"
+            ],
+            "justMyCode": true
+        }
+    ]
+}
