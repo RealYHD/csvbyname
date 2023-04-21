@@ -13,7 +13,7 @@ def run(args):
         args.recursive,
         args.add_re_property,
     )
-    write_collected_to_csv(args.output, collected, pkeys)
+    write_collected_to_csv(args.output, collected, pkeys, args.output_basename)
 
 
 def main():
@@ -63,6 +63,16 @@ def main():
         "Alternatively, use named REGEX groups.",
         nargs="+",
         type=str,
+    )
+    argparser.add_argument(
+        "-n",
+        "--output-basename",
+        help='Adds a column called "basename" to the resulting CSV where it is just '
+        "The base name of the path instead of the entire path. This is not guaranteed "
+        "to be unique.",
+        default=False,
+        required=False,
+        action="store_true",
     )
     argparser.add_argument(
         "-V",

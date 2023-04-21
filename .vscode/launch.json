@@ -8,7 +8,6 @@
             "name": "Use Test Resources",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/csvbyname/csvbyname.py",
             "console": "integratedTerminal",
             "args": [
                 "${workspaceFolder}/tests/resources",
@@ -20,7 +19,8 @@
                 "-V",
                 "DEBUG"
             ],
-            "justMyCode": true
+            "justMyCode": true,
+            "module": "csvbyname.cli"
         }
     ]
 }
