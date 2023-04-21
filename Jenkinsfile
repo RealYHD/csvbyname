@@ -22,7 +22,12 @@ pipeline {
                 sh "pip install dist/*.whl"
             }
         }
-        stage("publish") {
+        stage("archive") {
+            steps {
+                archiveArtifacts artifacts: 'dist/*.tar.gz, dist/*.whl'
+            }
+        }
+        stage("publish package") {
             when {
                 branch '**/main'
             }
