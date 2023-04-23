@@ -77,7 +77,7 @@ def write_collected_to_csv(
     property_keys: Iterable[str],
     output_basename: bool,
 ):
-    with open(output_path, "w") as output_fd:
+    with open(output_path, "w", newline="", encoding="utf-8") as output_fd:
         s_property_keys = sorted(property_keys)
         header = ["path"]
         if output_basename:
