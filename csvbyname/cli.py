@@ -69,7 +69,7 @@ def main():
         "-n",
         "--output-basename",
         help='Adds a column called "basename" to the resulting CSV where it is just '
-        "The base name of the path instead of the entire path. This is not guaranteed "
+        "the base name of the path instead of the entire path. This is not guaranteed "
         "to be unique.",
         default=False,
         required=False,
