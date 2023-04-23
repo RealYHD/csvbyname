@@ -63,6 +63,7 @@ def main():
         "Alternatively, use named REGEX groups.",
         nargs="+",
         type=str,
+        required=True
     )
     argparser.add_argument(
         "-n",

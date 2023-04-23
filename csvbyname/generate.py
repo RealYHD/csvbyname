@@ -72,20 +72,24 @@ def collect_files(
 
 
 def write_collected_to_csv(
-    output_path: str, collected: dict[str, dict[str, str]], property_keys: Iterable[str]
+    output_path: str,
+    collected: dict[str, dict[str, str]],
+    property_keys: Iterable[str],
+    output_basename: bool,
 ):
     with open(output_path, "w") as output_fd:
         s_property_keys = sorted(property_keys)
-        header = ["path", *s_property_keys]
+        header = ["path"]
+        if output_basename:
+            header.append("basename")
+        header.extend(s_property_keys)
         writer = csv.writer(output_fd)
         writer.writerow(header)
         for full_path, properties in collected.items():
-            writer.writerow(
-                [
-                    full_path,
-                    *(
-                        properties[k] if k in properties else "N/A"
-                        for k in s_property_keys
-                    ),
-                ]
+            row = [full_path]
+            if output_basename:
+                row.append(os.path.basename(full_path))
+            row.extend(
+                (properties[k] if k in properties else "N/A" for k in s_property_keys)
             )
+            writer.writerow(row)

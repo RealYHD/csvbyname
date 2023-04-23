@@ -13,6 +13,7 @@
                 "${workspaceFolder}/tests/resources",
                 "${workspaceFolder}/output.csv",
                 "-r",
+                "-n",
                 "-p",
                 "group_num:group(\\d)-\\w-\\d+\\.txt",
                 "group(\\d)-(?P<sect>\\w)-(?P<patid>\\d+)\\.txt",
