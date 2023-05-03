@@ -8,8 +8,7 @@ pipeline {
         }
         stage("install") {
             steps {
-                sh 'mamba env update --file environment.yml'
-                sh 'echo "mamba activate csvbyname" >> ~/.bashrc'
+                sh 'mamba env update --file environment.yml --prefix ./env || mamba env create --force --file environment.yml --prefix ./env'
             }
         }
         stage("build") {
@@ -17,7 +16,7 @@ pipeline {
                 sh "python -m build"
             }
         }
-        stage("test") {
+        stage("test installation") {
             steps {
                 sh "pip install dist/*.whl"
                 sh "csvbyname -h"
@@ -25,7 +24,7 @@ pipeline {
         }
         stage("archive") {
             steps {
-                archiveArtifacts artifacts: 'dist/*.tar.gz, dist/*.whl'
+                archiveArtifacts artifacts: 'dist/*.tar.gz, dist/*.whl', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
             }
         }
         stage("publish package") {
