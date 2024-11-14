@@ -1,14 +1,15 @@
 pipeline {
-    agent any
-    stages {
-        stage("clean") {
-            steps {
-                sh 'rm -rf ./dist/*'
-            }
+    agent {
+        kubernetes {
+            cloud 'rsys-devel'
+            defaultContainer 'pip'
+            inheritFrom 'pip'
         }
+    }
+    stages {
         stage("install") {
             steps {
-                sh 'mamba env update --file environment.yml --prefix ./env || mamba env create --force --file environment.yml --prefix ./env'
+                sh 'pip install -r requirements.txt'
             }
         }
         stage("build") {
@@ -32,7 +33,7 @@ pipeline {
                 branch '**/main'
             }
             steps {
-                withCredentials([usernamePassword(credentialsId: 'rs-git-package-registry-ydeng', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                withCredentials([usernamePassword(credentialsId: '4d6f64be-d26d-4f95-8de3-b6a9b0beb311', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "python -m twine upload --repository-url https://git.reslate.systems/api/packages/${USER}/pypi -u ${USER} -p ${PASS} --non-interactive --disable-progress-bar --verbose dist/*"
                 }
             }
